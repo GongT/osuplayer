@@ -13,7 +13,7 @@ function getDataFn(cmds){
 	cmds.forEach(function (name){
 		var data = OsbCommands[name] || OsbCompound[name];
 		if(!data){
-			ret += 'console.error("Unknown osB command: [' + name + '].");\n';
+			console.error("Unknown osB command: %s.", name);
 			return;
 		}
 		if(data.length){
@@ -136,16 +136,15 @@ function cleanUpFn(conf){
 }
 
 function START(conf, def){
-	var end = conf.args[def.argStart.pos];
-	if(undefined === end){
-		end = def.argStart.def;
+	var start = conf.args[def.argStart.pos];
+	if(undefined === start){
+		start = def.argStart.def;
 	}
-	return end;
+	return start;
 }
 
 function END(conf, def){
-	var end = conf.args[def.argEnd.pos];
-	return end;
+	return conf.args[def.argEnd.pos];
 }
 
 var CMDList = {
