@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>基础OSB测试</title>
+	<link href="../libs/bootstrap.min.css" rel="stylesheet"/>
+	<link href="./styles.css" rel="stylesheet"/>
+	<script type="text/javascript" src="../libs/jquery.js"></script>
+	<script type="text/javascript" src="../libs/kinetic.js"></script>
+
+	<script type="text/javascript" src="../playosb/core/_proto.js"></script>
+	<script type="text/javascript" src="../playosb/core/setfile.js"></script>
+	<script type="text/javascript" src="../playosb/core/setter.js"></script>
+	<script type="text/javascript" src="../playosb/core/avcontrol.js"></script>
+
+	<script type="text/javascript" src="../playosb/parser/parse_shim.js"></script>
+	<script type="text/javascript" src="../playosb/parser/osbparser.js"></script>
+	<script type="text/javascript" src="../playosb/parser/osuparser.js"></script>
+	<script type="text/javascript" src="../playosb/parser/osb_object.js"></script>
+
+	<script type="text/javascript" src="../playosb/debug/debug.js"></script>
+	<script type="text/javascript" src="../playosb/debug/debug_css.js"></script>
+	
+	<script type="text/javascript" src="../playosb/display/stagecontrol.js"></script>
+	<script type="text/javascript" src="../playosb/display/osd.js"></script>
+	<script type="text/javascript" src="../playosb/display/primary_render.js"></script>
+
+	<script type="text/javascript" src="../playosb/imagedraw/render_state.js"></script>
+	<script type="text/javascript" src="../playosb/imagedraw/render_frame.js"></script>
+
+	<script type="text/javascript" src="../playosb/network/downloader.js"></script>
+	<script type="text/javascript" src="../playosb/network/loadingmessage.js"></script>
+
+	<script type="text/javascript" src="../playosb/osb_commands/main.js"></script>
+	<script type="text/javascript" src="../playosb/osb_commands/loopFunc.js"></script>
+	<script type="text/javascript" src="../playosb/osb_commands/simple_command_function.js"></script>
+	<script type="text/javascript" src="../playosb/osb_commands/simple_command_list.js"></script>
+
+	<script type="text/javascript" src="../playosb/playosb.js"></script>
+
+	<script type="text/javascript" src="./scripts.js"></script>
+	<script type="text/javascript">
+		"use strict";
+		$(function (){
+			window.testPlayer = new OsuPlayer({
+				container: $('#osbPlayer'),
+				basePath : './49933',
+				osuName  : 'ClariS - Sayonara wa Iwanai (Athena Tennos) [lucyfly\'s Hard].osu',
+				osbName  : 'ClariS - Sayonara wa Iwanai (Athena Tennos).osb',
+				autoPlay : false
+			});
+		});
+	</script>
+</head>
+
+<div id="osbPlayer">
+	<div class="video"></div>
+	<div class="stage"></div>
+	<div class="audio"></div>
+</div>
+
+</html>

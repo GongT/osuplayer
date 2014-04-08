@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>视频测试</title>
+	<link href="../libs/bootstrap.min.css" rel="stylesheet"/>
+	<link href="./styles.css" rel="stylesheet"/>
+	<script type="text/javascript" src="../libs/jquery.js"></script>
+	<script type="text/javascript" src="../libs/require.min.js"></script>
+	<script type="text/javascript" src="./scripts.js"></script>
+	<script type="text/javascript">
+		"use strict";
+		var OsuPlayer = function (x){
+		};
+		$(function (){
+			require(['jquery', 'playosb'], function ($, op){
+				OsuPlayer = op;
+				window.build = function (){
+					new OsuPlayer({
+						container: $('#osbPlayer'),
+						basePath : './33428',
+						osuName  : 'Itou Kanako - Hacking to the Gate (TV Size) (qilliam) [Hard].osu',
+						osbName  : '',
+						autoPlay : false
+					});
+				};
+				build();
+			});
+		});
+	</script>
+</head>
+
+<div id="osbPlayer">
+	<div class="video"></div>
+	<div class="stage"></div>
+	<div class="audio"></div>
+</div>
+
+</html>

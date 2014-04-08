@@ -1,0 +1,63 @@
+
+canvas.break {
+	display: inline-block !important;
+	-position: relative !important;
+	border: red solid thin;
+}
+
+body {
+	background: #999;
+}
+
+audio {
+	width: 100%;
+}
+
+/*#DebugMessage {
+	position: absolute;
+	left: 300px;
+	top: 0px;
+	color: red;
+	font-size: 20px;
+}*/
+
+.dbg_contain .kineticjs-content {
+	width: auto !important;
+	height: auto !important;
+}
+
+.dbg_holder {
+	float: left !important;
+	border: red 2px solid !important;
+	margin: 10px !important;
+	position: relative !important;
+}
+
+.dbg_contain audio {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 100%;
+}
+
+.hideExt canvas:first-child,
+.hideExt canvas:last-child {
+	display: none !important;
+}
+
+#Debugger {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	z-index: 10000;
+	background: white;
+	border-top-left-radius: 10px;
+	padding: 5px;
+}
+
+.debug_layer {
+	position: fixed !important;
+	right: 0 !important;
+	top: 100px !important;
+}
+
