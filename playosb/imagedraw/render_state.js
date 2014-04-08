@@ -27,9 +27,8 @@ OsuPlayer.prototype.render = function (time){
 				obj.visable(false);
 				delete bo.current[obj.zIndex];
 			});
-			if(next_frame.next){
-				this.nextFrame = next_frame.next;
-			}
+			
+			this.nextFrame = next_frame.next;
 
 			if(this.isDebugModeEnabled){
 				console.log('!%d\t! 关键帧 %d -> %d , current visable: %s', time, this.lastFrame.time, next_frame.time, bo.current.length);

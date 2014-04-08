@@ -18,7 +18,7 @@ function parseCommand(command, linNo){
 	var name = c.shift(), easing, starttime, endtime, loopcount;
 
 	if(name == 'L' || name == 'T'){
-		starttime = c.shift() || NaN;
+		starttime = parseInt(c.shift());
 		loopcount = c.shift() || 0;
 		return {
 			type              : 'compound',
@@ -31,8 +31,8 @@ function parseCommand(command, linNo){
 		};
 	} else{
 		easing = c.shift() || 0;
-		starttime = c.shift() || NaN;
-		endtime = c.shift() || NaN;
+		starttime = parseInt(c.shift());
+		endtime = parseInt(c.shift());
 		return {
 			type              : 'simple',
 			name              : name,
@@ -46,7 +46,7 @@ function parseCommand(command, linNo){
 }
 
 function parseLoopCommand(cmd){
-	optimization_simplecommand(cmd.subcommands);
+	// optimization_simplecommand(cmd.subcommands);
 	var minStart = 99999;
 	var maxEnd = 0;
 	cmd.subcommands.forEach(function (c){ // 重新计算L的开始、结束时间

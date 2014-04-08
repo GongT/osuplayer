@@ -25,7 +25,7 @@ function initRender(player){
 	 * anime_start 本次播放的起始位置，用来处理播放器滚动条
 	 */
 	var current_time = 0 , anime_flag = 0 , anime_start = 0;
-	var anime_timer = 0 , fps_timer = 0, frame_count = 0;
+	var anime_timing = false , fps_timer = 0, frame_count = 0;
 
 	var loadingMessage = player.loadingMessage,
 			stage = player.stage,
@@ -41,7 +41,7 @@ function initRender(player){
 			stage.draw();
 			return;
 		}
-		if(anime_timer){
+		if(anime_timing){
 			return;
 		}
 		loadingMessage.hide();
@@ -51,7 +51,7 @@ function initRender(player){
 		}
 		osd.show();
 		$stage.startRender(120);
-		anime_timer = requestAnimFrame(___playFunc);
+		anime_timing = requestAnimFrame(___playFunc);
 		fps_timer = setInterval(function (){
 			showFps(frame_count);
 			frame_count = 0;
@@ -64,7 +64,7 @@ function initRender(player){
 			stage.draw();
 			return;
 		}
-		if(!anime_timer){
+		if(!anime_timing){
 			return;
 		}
 		if(!player._loaded){
@@ -73,9 +73,8 @@ function initRender(player){
 		// osd.hide();
 		loadingMessage.show();
 		$stage.stopRender();
-		cancelRequestAnimFrame(anime_timer);
 		clearInterval(fps_timer);
-		anime_timer = 0;
+		anime_timing = false;
 		anime_flag = 0;
 		fps_timer = 0;
 		frame_count = 0;
@@ -95,7 +94,9 @@ function initRender(player){
 			// console.log('MUST full render!');
 			player.fullRender(current_time);
 		}
-		anime_timer = requestAnimFrame(___playFunc);
+		if(anime_timing){
+			anime_timing = requestAnimFrame(___playFunc);
+		}else console.info('animation abort')
 	}
 
 	return {begin: beginRender, end: stopRender};

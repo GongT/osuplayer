@@ -58,19 +58,11 @@ function OsbGenerator(commands, startTime){
 		var l_op = [], r_op = [], c_op = [];
 		mathFn += '\ndo{ // ALL ANIME OF ' + cName + '\n';
 
-		// 下面这个foreach目的是给动画按时间排序（顺便生成动画函数
+		// 下面这个foreach目的是给动画按时间排序（顺便生成动画函数的各个部分
 		cmd_by_name[cName].forEach(function (conf){
 			mathFn += '// ' + conf.debug_orig_command + '\n';
-			// 每一个动画
 			var offsetStart = conf.start - startTime;
 			var offsetEnd = conf.end - startTime;
-			var duration = conf.end - conf.start;
-			var current; // 计算百分比的语句
-			if(offsetStart){ // 开始时间与Object出现有间隔
-				current = '     current = (lastTime-' + offsetStart + ')/' + duration + ';\n';
-			} else{ // 开始时间点与Object本身相同
-				current = '     current = lastTime/' + duration + ';\n';
-			}
 
 			// 左侧操作 - 当前时间小于动画开始
 			push_or_append(l_op, {
@@ -83,7 +75,7 @@ function OsbGenerator(commands, startTime){
 			push_or_append(c_op, {
 				start: offsetStart,
 				end  : offsetEnd,
-				value: current + CMDList.runAnimeFn(conf)
+				value: CMDList.calcCurrentFn(conf, startTime) + CMDList.runAnimeFn(conf)
 			});
 			// 右侧操作 - 当前时间大于动画结束
 			push_or_append(r_op, {
@@ -126,9 +118,9 @@ function OsbGenerator(commands, startTime){
 		$else = [];
 		c_op.forEach(function (obj){
 			var smt = "if(lastTime>" + obj.start + " && lastTime<" + obj.end + "){ // C\n" +
-			          "\t\t" + obj.value + '\n' +
-			          '\t\tbreak;\n' +
-			          '\t}';
+					  "\t\t" + obj.value + '\n' +
+					  '\t\tbreak;\n' +
+					  '\t}';
 			$else.push(smt);
 		});
 		if($else.length){
@@ -139,9 +131,9 @@ function OsbGenerator(commands, startTime){
 		$else = [];
 		r_op.forEach(function (obj){
 			var smt = 'if(lastTime>=' + obj.end + '){ // R\n' +
-			          '\t' + obj.value + '\n' +
-			          '\tbreak;\n' +
-			          '}';
+					  '\t' + obj.value + '\n' +
+					  '\tbreak;\n' +
+					  '}';
 			$else.push(smt);
 		});
 		if($else.length){

@@ -25,7 +25,7 @@ function getDataFn(cmds){
 				ret += 'var ' + args.join(',') + ';\n';
 			}
 		} else if(data.getDataFn){
-			data.getDataFn(name);
+			ret += data.getDataFn(name);
 		}
 	});
 	return ret;
@@ -35,11 +35,6 @@ function setDataFn(objName, cmds){
 	var ret = '';
 	cmds.forEach(function (name){
 		var data = OsbCommands[name] || OsbCompound[name];
-		if(!data){
-			ret += '// console.error("Unknown osB command: ' + name + '");\n';
-			return;
-		}
-
 		if(data.length){
 			data.forEach(function (def){
 				ret += ' if(' + def.var + '!==undefined){\n';
@@ -54,7 +49,7 @@ function setDataFn(objName, cmds){
 				ret += '");\n';
 			}
 		} else if(data.setDataFn){
-			data.setDataFn(name);
+			ret += data.setDataFn(objName, name);
 		}
 	});
 	return ret;
@@ -66,16 +61,13 @@ function setDataFn(objName, cmds){
 function resetFn(conf){
 	var ret = '';
 	var data = OsbCommands[conf.name] || OsbCompound[conf.name];
-	if(!data){
-		return '// console.error("Unknown osB command: ' + conf.debug_orig_command + '");\n';
-	}
 
 	if(data.length){
 		data.forEach(function (def){
 			ret += def.var + ' = ' + JSON.stringify(START(conf, def)) + ';\n';
 		});
 	} else if(data.resetFn){
-		data.resetFn(conf);
+		ret += data.resetFn(conf);
 	}
 
 	return ret;
@@ -87,9 +79,6 @@ function resetFn(conf){
 function runAnimeFn(conf){
 	var ret = '';
 	var data = OsbCommands[conf.name] || OsbCompound[conf.name];
-	if(!data){
-		return '// console.error("Unknown osB command: ' + conf.debug_orig_command + '");\n';
-	}
 	var ease = '(' + ease_code[conf.ease] + ')';
 	if(!ease){
 		console.error('unknown easing function: ' + conf.ease);
@@ -108,7 +97,7 @@ function runAnimeFn(conf){
 			}
 		});
 	} else if(data.runAnimeFn){
-		data.runAnimeFn(conf);
+		ret += data.runAnimeFn(conf);
 	}
 
 	return ret;
@@ -120,19 +109,29 @@ function runAnimeFn(conf){
 function cleanUpFn(conf){
 	var ret = '';
 	var data = OsbCommands[conf.name] || OsbCompound[conf.name];
-	if(!data){
-		return '// console.error("Unknown osB command: ' + conf.debug_orig_command + '");\n';
-	}
 
 	if(data.length){
 		data.forEach(function (def){
 			ret += def.var + ' = ' + JSON.stringify(END(conf, def)) + ';\n';
 		});
 	} else if(data.cleanUpFn){
-		data.cleanUpFn(conf);
+		ret += data.cleanUpFn(conf);
 	}
 
 	return ret;
+}
+function calcCurrentFn(conf, startTime){ // 计算百分比的语句
+	if(OsbCompound[conf.name]){
+		return OsbCompound[conf.name].calcCurrentFn(conf, startTime);
+	} else{
+		var offsetStart = conf.start - startTime;
+		var duration = conf.end - conf.start;
+		if(offsetStart){ // 开始时间与Object出现有间隔
+			return 'current = (lastTime-' + offsetStart + ')/' + duration + ';\n';
+		} else{ // 开始时间点与Object本身相同
+			return 'current = lastTime/' + duration + ';\n';
+		}
+	}
 }
 
 function START(conf, def){
@@ -148,9 +147,10 @@ function END(conf, def){
 }
 
 var CMDList = {
-	setDataFn : setDataFn,
-	getDataFn : getDataFn,
-	resetFn   : resetFn,
-	runAnimeFn: runAnimeFn,
-	cleanUpFn : cleanUpFn
+	setDataFn    : setDataFn,
+	getDataFn    : getDataFn,
+	resetFn      : resetFn,
+	runAnimeFn   : runAnimeFn,
+	cleanUpFn    : cleanUpFn,
+	calcCurrentFn: calcCurrentFn
 };

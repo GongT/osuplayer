@@ -37,6 +37,16 @@ table tr {
 			z-index: -1;
 		}
 	}
+	&.none-visable{
+		.is_visable:before{
+			content: 'no';
+		}
+	}
+	&.visable{
+		.is_visable:before{
+			content: 'YES';
+		}
+	}
 }
 
 table.filter tr.none-visable {

@@ -149,33 +149,14 @@ OsbObject.prototype.setStage = function ($stage){
 	if(!this.commands.length){
 		return false;
 	}
-	var startTime = 99999999, endTime = 0;
-	this.commands.forEach(function (conf){ // 找到最大时间范围，即为这个物体的显示时间
-		if(startTime && conf.start){
-			startTime = Math.min(conf.start, startTime);
-		} else{
-			startTime = 0;
-		}
-		if(conf.end){
-			endTime = Math.max(conf.end, endTime);
-		}
-	});
 	if(debugMode){
-		console.log('new Object %s , %d-%d', this.path, startTime, endTime);
+		console.log('new Object %s , %d-%d', this.path, this.startTime, this.endTime);
 	}
 
-	mathFn += OsbGenerator(this.commands, startTime);
-
+	mathFn += OsbGenerator(this.commands, this.startTime);
 	mathFn += '\n}';
 
-	this.startTime = startTime;
-	this.endTime = endTime;
 	try{
-		/*
-		 console.clear();
-		 debugger;
-		 console.log('function var name: "mathFn" , type it to view.');
-		 */
 		eval('this.___stateFn= ' + mathFn);
 	} catch(e){
 		console.groupEnd();

@@ -1,3 +1,4 @@
+// 有初始值问题，不能使用
 function optimization_simplecommand(commands){
 	for(var i = 0; i < commands.length; i++){ // 优化编辑器生成出来的指令
 		if(commands[i].name == 'M'){

@@ -10,8 +10,6 @@ function osbparser(osbData){
 	}
 	var osb_all_lines = osbData.replace(/\n\n/g, '\n').replace(/\n\n/g, '\n').replace(/,\s+/g, ',').replace(/,,/g, ',0,').split('\n');
 	var objects = tokenize(osb_all_lines);
-	console.log(objects[0]);
-	debugger;
 
 	/**var loopStart = 0, loopCount = 0, timeOffset = 0, spaceOffset = -1, parsedArgs = [
 	 ], tmp, thisLine, curHi, tmpHi, curArgs;

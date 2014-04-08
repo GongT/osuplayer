@@ -41,12 +41,18 @@ function tokenize(osb_list){
 	});
 
 	object_list.forEach(function (obj){ // 重新计算L命令的开始结束时间
-		optimization_simplecommand(obj.commands); // 优化代码
+		// optimization_simplecommand(obj.commands);
+		var startTime = 999999;
+		var endTime = 0;
 		obj.commands.forEach(function (cmd){
 			if(cmd.name === 'L'){
 				parseLoopCommand(cmd);
 			}
+			startTime = Math.min(startTime, cmd.start);
+			endTime = Math.max(endTime, cmd.end);
 		});
+		obj.startTime = startTime || 0;
+		obj.endTime = endTime || 999999;
 		optimization_object(obj, obj.commands);
 	});
 	return object_list;

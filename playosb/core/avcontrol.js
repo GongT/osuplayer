@@ -50,7 +50,7 @@ function AudioControl($parent){
 			this.pause();
 		},
 		'seeked'        : function (){
-			console.log('seeked')
+			//console.log('seeked')
 		}
 	});
 }
