@@ -1,7 +1,7 @@
 // 调试用函数
 var size = 400;
 function testLayers($p){
-	var player = OsuPlayer($p);
+	var player = new OsuPlayer($p);
 	player.setSize(size);
 	$p.addClass('dbg_contain').removeAttr('style')
 			.find('canvas').addClass('dbg_holder');
@@ -12,7 +12,7 @@ function toggLayers($p){
 }
 
 function incSize($p){
-	var player = OsuPlayer($p);
+	var player = new OsuPlayer($p);
 	if(size + 50 > 0){
 		size += 50;
 		player.setSize(size);
@@ -20,7 +20,7 @@ function incSize($p){
 }
 
 function decSize($p){
-	var player = OsuPlayer($p);
+	var player = new OsuPlayer($p);
 	if(size - 50 < 1000){
 		size -= 50;
 		player.setSize(size);
@@ -31,7 +31,7 @@ var isDebug = false;
 function toggDebug($p){
 	isDebug = !isDebug;
 	OsuPlayer.debug(isDebug);
-	var player = OsuPlayer($p);
+	var player = new OsuPlayer($p);
 	player.debug(isDebug);
 	if(isDebug){
 		this.attr('class', 'btn btn-warning');

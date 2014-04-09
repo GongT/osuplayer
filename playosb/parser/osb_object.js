@@ -94,7 +94,7 @@ OsbObject.prototype.setStage = function ($stage){
 	} else{
 		offsetFn = calcOffset(this.origin);
 	}
-	var mathFn = 'function(current_time,lastTime){\n';
+	var mathFn = 'function(current_time,lastTime){\nvar current;\n';
 
 	// 分析动画和图片
 	this.imageList = [];

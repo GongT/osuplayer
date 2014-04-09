@@ -1,34 +1,34 @@
-function getDataFn(){
+function getDataFnLoop(){
 	return '';// do nothing
 }
 
-function resetFn(){
+function resetFnLoop(){
 	return '';// do nothing
 }
 
-function runAnimeFn(cmd){
+function runAnimeFnLoop(cmd){
 	// runAnimeFn
 	var fn = OsbGenerator(cmd.subcommands, 0);
 	return fn;
 }
 
-function cleanUpFn(){
+function cleanUpFnLoop(){
 	return '';// do nothing
 }
 
-function setDataFn(){
+function setDataFnLoop(){
 	return '';// set calc data
 }
 
-function calcCurrentFn(conf, startTime){ // 计算百分比的语句
+function calcCurrentFnLoop(conf, startTime){ // 计算百分比的语句
 	return 'lastTime = lastTime%' + conf.duration + ';\n';
 }
 
 var loopFun = {
-	setDataFn    : setDataFn,
-	getDataFn    : getDataFn,
-	resetFn      : resetFn,
-	runAnimeFn   : runAnimeFn,
-	cleanUpFn    : cleanUpFn,
-	calcCurrentFn: calcCurrentFn
+	setDataFn    : setDataFnLoop,
+	getDataFn    : getDataFnLoop,
+	resetFn      : resetFnLoop,
+	runAnimeFn   : runAnimeFnLoop,
+	cleanUpFn    : cleanUpFnLoop,
+	calcCurrentFn: calcCurrentFnLoop
 };

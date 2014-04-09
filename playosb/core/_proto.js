@@ -138,6 +138,8 @@ function OsuPlayer(config){
 
 	this.init_config = config;
 	init(this, config);
+
+	createDebugContextMenu(container, this);
 }
 
 OsuPlayer.background_regex =

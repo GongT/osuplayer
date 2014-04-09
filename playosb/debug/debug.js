@@ -4,8 +4,7 @@ OsuPlayer.prototype.debug = function (status){
 		status = true;
 	}
 	if(status && !debugMode){
-		console.error('If you want debug osuPlayer, please run window.OsuPlayer.debug(); first.');
-		return;
+		OsuPlayer.debug(status);
 	}
 	if(this.isDebugModeEnabled == status){
 		console.error('already%s in debug mode.', this.isDebugModeEnabled? '' : ' not');

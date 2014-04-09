@@ -5,14 +5,13 @@
  stopRender - 音乐暂停时终止计时器
  都没有外部接口，不能调用
  */
-var requestAnimFrame = (function (){
-	return window.requestAnimationFrame || window.webkitRequestAnimationFrame ||
-		   window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
-		   function (/* function */ callback/*, DOMElement */){
-			   // Fallback method, 120 fps.
-			   return window.setTimeout(callback, 1000/120);
-		   };
-})();
+var requestAnimFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame ||
+					   window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+					   window.msRequestAnimationFrame ||
+					   function (/* function */ callback/*, DOMElement */){
+						   // Fallback method, 120 fps.
+						   return window.setTimeout(callback, 1000/120);
+					   };
 var cancelRequestAnimFrame = window['cancelAnimationFrame'] || window.webkitCancelRequestAnimationFrame ||
 							 window.mozCancelRequestAnimationFrame || window.oCancelRequestAnimationFrame ||
 							 window.msCancelRequestAnimationFrame || clearTimeout;
@@ -96,7 +95,9 @@ function initRender(player){
 		}
 		if(anime_timing){
 			anime_timing = requestAnimFrame(___playFunc);
-		}else console.info('animation abort')
+		} else{
+			console.info('animation abort')
+		}
 	}
 
 	return {begin: beginRender, end: stopRender};

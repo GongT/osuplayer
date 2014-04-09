@@ -1,0 +1,26 @@
+menu.OsuPlayerDebugMenu {
+	margin: 0;
+	position: absolute;
+	min-width: 120px;
+	background: white;
+	padding: 5px 0px;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	border-radius: 4px;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+	color: #333;
+	font-size: 14px;
+
+	> * {
+		display: list-item;
+		list-style: none;
+		padding: 5px 5px;
+		cursor: pointer;
+		&:hover {
+			background: #428BCA;
+			color: white
+		}
+		&:before{
+			content: attr(label) '';
+		}
+	}
+}
