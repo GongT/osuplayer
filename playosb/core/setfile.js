@@ -69,7 +69,7 @@ OsuPlayer.prototype.setOsbFile = function (fileName){
 		}
 	}, function (){
 		self.loadingMessage.fail().text('OSB download failed: ' + fileName);
-		this.osd.label('OsbFile')('FAIL! ' + fileName);
+		self.osd.label('OsbFile')('FAIL! ' + fileName);
 		if(self.isDebugModeEnabled){
 			console.error('osb文件下载失败');
 		}
