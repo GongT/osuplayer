@@ -44,7 +44,6 @@ function initRender(player){
 			return;
 		}
 		loadingMessage.hide();
-		osd.show();
 		if(!player._loaded){
 			player.reload();
 		}

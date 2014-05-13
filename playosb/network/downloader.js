@@ -1,5 +1,5 @@
 function Downloader(basePath){
-	Downloader.base = basePath || './';
+	this.base = Downloader.base = basePath || './';
 }
 
 Downloader.prototype.progress = $.noop;

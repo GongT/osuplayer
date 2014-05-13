@@ -336,7 +336,7 @@ OsuPlayer.prototype.setOsbFile = function (fileName){
 		}
 	}, function (){
 		self.loadingMessage.fail().text('OSB download failed: ' + fileName);
-		this.osd.label('OsbFile')('FAIL! ' + fileName);
+		self.osd.label('OsbFile')('FAIL! ' + fileName);
 		if(self.isDebugModeEnabled){
 			console.error('osb文件下载失败');
 		}
@@ -451,7 +451,7 @@ OsuPlayer.prototype.debug = function (status){
 	this.isDebugModeEnabled = status;
 	this.reload();
 
-	var objects = this._osb_objects.objects;
+	var objects = this._osb_objects? this._osb_objects.objects : [];
 	if(status){
 		this.debugFormWnd = window.open(undefined, 'osuplayerdebug', 'width=1800,height=800');
 		var doc = this.debugFormWnd.document;
@@ -483,18 +483,18 @@ OsuPlayer.debug = function (is_debug){
 	debugMode = is_debug;
 	if(is_debug){
 		console.log('Entering debug mode\n' +
-					'\tuse [instance object].debug(); to debug a player.\n' +
-					'\t`window.selected` will store your last clicked object.\n' +
-					'');
+		            '\tuse [instance object].debug(); to debug a player.\n' +
+		            '\t`window.selected` will store your last clicked object.\n' +
+		            '');
 	}
 };
 
 function buildDebugForm(objs, document){
 	var $holder = $('<div id="ObjectStatusDebug"/>', document).appendTo(document.body);
 	var html = '<table class="table table-bordered table-hover" border="0">' +
-			   '<thead><tr><th title="z-index 显示序列">ID(z)</th><th>图片路径</th>' +
-			   '<th>层</th><th>显示区间</th><th>显示</th><th>状态</th></tr>' +
-			   '</thead><tbody>';
+	           '<thead><tr><th title="z-index 显示序列">ID(z)</th><th>图片路径</th>' +
+	           '<th>层</th><th>显示区间</th><th>显示</th><th>状态</th></tr>' +
+	           '</thead><tbody>';
 	objs.forEach(function (obj, index){
 		var data = {
 			'zIndex'    : obj.zIndex,
@@ -513,9 +513,9 @@ function buildDebugForm(objs, document){
 	});
 	html += '</tbody></table>';
 	html += '<div class="extra">' +
-			'CurrentTime：<span class="time">--</span>,' +
-			'<span onclick="document.querySelector(\'table\').classList.toggle(\'filter\')" style="float:right">toggleDisplay</span>' +
-			'</div>';
+	        'CurrentTime：<span class="time">--</span>,' +
+	        '<span onclick="document.querySelector(\'table\').classList.toggle(\'filter\')" style="float:right">toggleDisplay</span>' +
+	        '</div>';
 
 	$holder.html(html);
 
@@ -537,7 +537,7 @@ function buildDebugForm(objs, document){
 var DebugWindowCss = 
 	"<style type=\"text/css\">body{padding-bottom:200px}#ObjectStatusDebug{width:100%}#ObjectStatusDebug td:last-child{width:50%;white-space:pre}table tr:hover .file{overflow:visible}table tr:hover .file .view{z-index:1000;background:#00f;outline:#f00 2px solid}table tr .file{position:relative;overflow:hidden;color:#000;font-size:18px;font-weight:bold;text-shadow:1px 1px 3px #fff;background:rgba(255,255,255,0.64)}table tr .file .view{width:100%;position:absolute;left:0;top:0;z-index:-1}table tr.none-visable .is_visable:before{content:'no'}table tr.visable .is_visable:before{content:'YES'}table.filter tr.none-visable{display:none}.extra{position:fixed;bottom:0;right:0;left:0;background:#fff;border-top:#000 solid 2px}.extra .time{color:#f00;font-weight:bold}table{border-spacing:0;border-collapse:collapse}td,th{padding:0}table{max-width:100%;background-color:transparent}th{text-align:left}.table{width:100%;margin-bottom:20px}.table>thead>tr>th,.table>tbody>tr>th,.table>tfoot>tr>th,.table>thead>tr>td,.table>tbody>tr>td,.table>tfoot>tr>td{padding:8px;line-height:1.42857143;vertical-align:top;border-top:1px solid #ddd}.table>thead>tr>th{vertical-align:bottom;border-bottom:2px solid #ddd}.table>caption+thead>tr:first-child>th,.table>colgroup+thead>tr:first-child>th,.table>thead:first-child>tr:first-child>th,.table>caption+thead>tr:first-child>td,.table>colgroup+thead>tr:first-child>td,.table>thead:first-child>tr:first-child>td{border-top:0}.table>tbody+tbody{border-top:2px solid #ddd}.table .table{background-color:#fff}.table-condensed>thead>tr>th,.table-condensed>tbody>tr>th,.table-condensed>tfoot>tr>th,.table-condensed>thead>tr>td,.table-condensed>tbody>tr>td,.table-condensed>tfoot>tr>td{padding:5px}.table-bordered{border:1px solid #ddd}.table-bordered>thead>tr>th,.table-bordered>tbody>tr>th,.table-bordered>tfoot>tr>th,.table-bordered>thead>tr>td,.table-bordered>tbody>tr>td,.table-bordered>tfoot>tr>td{border:1px solid #ddd}.table-bordered>thead>tr>th,.table-bordered>thead>tr>td{border-bottom-width:2px}.table-striped>tbody>tr:nth-child(odd)>td,.table-striped>tbody>tr:nth-child(odd)>th{background-color:#f9f9f9}.table-hover>tbody>tr:hover>td,.table-hover>tbody>tr:hover>th{background-color:#f5f5f5}</style>"	;
 var DebugMenuCss = 
-	"<style type=\"text/css\">menu.OsuPlayerDebugMenu{margin:0;position:absolute;min-width:120px;background:#fff;padding:5px 0;border:1px solid rgba(0,0,0,0.15);border-radius:4px;box-shadow:0 6px 12px rgba(0,0,0,0.175);color:#333;font-size:14px}menu.OsuPlayerDebugMenu>*{display:list-item;list-style:none;padding:5px 5px;cursor:pointer}menu.OsuPlayerDebugMenu>*:hover{background:#428bca;color:#fff}menu.OsuPlayerDebugMenu>*:before{content:attr(label) ''}</style>"	;
+	"<style type=\"text/css\">menu.OsuPlayerDebugMenu{margin:0;position:absolute;min-width:120px;background:#fff;padding:5px 0;border:1px solid rgba(0,0,0,0.15);border-radius:4px;box-shadow:0 6px 12px rgba(0,0,0,0.175);color:#333;font-size:14px;z-index:99999}menu.OsuPlayerDebugMenu>*{display:list-item;list-style:none;padding:5px 5px;cursor:pointer}menu.OsuPlayerDebugMenu>*:hover{background:#428bca;color:#fff}menu.OsuPlayerDebugMenu>*:before{content:attr(label) ''}</style>"	;
 
 /* - ./playosb/display/osd.js - */
 function OnScreenDisplay(stage){
@@ -639,7 +639,6 @@ function initRender(player){
 			return;
 		}
 		loadingMessage.hide();
-		osd.show();
 		if(!player._loaded){
 			player.reload();
 		}
@@ -860,7 +859,7 @@ OsuPlayer.prototype.render = function (time){
 
 /* - ./playosb/network/downloader.js - */
 function Downloader(basePath){
-	Downloader.base = basePath || './';
+	this.base = Downloader.base = basePath || './';
 }
 
 Downloader.prototype.progress = $.noop;
@@ -941,7 +940,7 @@ function LoadingMessage(stage){
 		opacity: 1
 	});
 	var text = window.ktext = new Kinetic.Text({
-		text    : 'Loading...',
+		text    : 'Ready for playing...',
 		x       : 10,
 		width   : rect.width - 20,
 		y       : text_top,
@@ -1010,6 +1009,10 @@ function LoadingMessage(stage){
 			text.setFill('black');
 			circle.show();
 			text.show();
+			if(anim){
+				TooLate = false;
+				anim.start();
+			}
 			return ret;
 		},
 		opacity   : function (is_op){
@@ -1963,6 +1966,9 @@ function osbparser(osbData){
 
 /* - ./playosb/parser/osuparser.js - */
 function osuparser(osuData){
+	if(!osuData){
+		return;
+	}
 	var bgInfo = osuData.match(/^\[Events\]([\s\S]*?)^\[/m);
 	if(bgInfo){
 		bgInfo = OsuPlayer.background_regex.exec(bgInfo[1]);

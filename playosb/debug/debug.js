@@ -14,7 +14,7 @@ OsuPlayer.prototype.debug = function (status){
 	this.isDebugModeEnabled = status;
 	this.reload();
 
-	var objects = this._osb_objects.objects;
+	var objects = this._osb_objects? this._osb_objects.objects : [];
 	if(status){
 		this.debugFormWnd = window.open(undefined, 'osuplayerdebug', 'width=1800,height=800');
 		var doc = this.debugFormWnd.document;
@@ -46,18 +46,18 @@ OsuPlayer.debug = function (is_debug){
 	debugMode = is_debug;
 	if(is_debug){
 		console.log('Entering debug mode\n' +
-					'\tuse [instance object].debug(); to debug a player.\n' +
-					'\t`window.selected` will store your last clicked object.\n' +
-					'');
+		            '\tuse [instance object].debug(); to debug a player.\n' +
+		            '\t`window.selected` will store your last clicked object.\n' +
+		            '');
 	}
 };
 
 function buildDebugForm(objs, document){
 	var $holder = $('<div id="ObjectStatusDebug"/>', document).appendTo(document.body);
 	var html = '<table class="table table-bordered table-hover" border="0">' +
-			   '<thead><tr><th title="z-index 显示序列">ID(z)</th><th>图片路径</th>' +
-			   '<th>层</th><th>显示区间</th><th>显示</th><th>状态</th></tr>' +
-			   '</thead><tbody>';
+	           '<thead><tr><th title="z-index 显示序列">ID(z)</th><th>图片路径</th>' +
+	           '<th>层</th><th>显示区间</th><th>显示</th><th>状态</th></tr>' +
+	           '</thead><tbody>';
 	objs.forEach(function (obj, index){
 		var data = {
 			'zIndex'    : obj.zIndex,
@@ -76,9 +76,9 @@ function buildDebugForm(objs, document){
 	});
 	html += '</tbody></table>';
 	html += '<div class="extra">' +
-			'CurrentTime：<span class="time">--</span>,' +
-			'<span onclick="document.querySelector(\'table\').classList.toggle(\'filter\')" style="float:right">toggleDisplay</span>' +
-			'</div>';
+	        'CurrentTime：<span class="time">--</span>,' +
+	        '<span onclick="document.querySelector(\'table\').classList.toggle(\'filter\')" style="float:right">toggleDisplay</span>' +
+	        '</div>';
 
 	$holder.html(html);
 

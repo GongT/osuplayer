@@ -33,7 +33,7 @@ function LoadingMessage(stage){
 		opacity: 1
 	});
 	var text = window.ktext = new Kinetic.Text({
-		text    : 'Loading...',
+		text    : 'Ready for playing...',
 		x       : 10,
 		width   : rect.width - 20,
 		y       : text_top,
@@ -102,6 +102,10 @@ function LoadingMessage(stage){
 			text.setFill('black');
 			circle.show();
 			text.show();
+			if(anim){
+				TooLate = false;
+				anim.start();
+			}
 			return ret;
 		},
 		opacity   : function (is_op){
