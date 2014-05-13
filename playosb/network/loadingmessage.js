@@ -58,7 +58,7 @@ function LoadingMessage(stage){
 		layer.add(circle);
 		anim = new Kinetic.Animation(function (frame){
 			if(TooLate){
-				circle.rotate(0);
+				circle.setRotation(0);
 			} else{
 				circle.rotate(frame.timeDiff*Math.PI/1000);
 			}
@@ -80,7 +80,7 @@ function LoadingMessage(stage){
 		if(anim){
 			anim.stop();
 		}
-		circle.rotate(0);
+		circle.setRotation(0);
 		stage.draw();
 		return ret;
 	}

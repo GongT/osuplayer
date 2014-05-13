@@ -6,15 +6,15 @@
  都没有外部接口，不能调用
  */
 var requestAnimFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame ||
-					   window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
-					   window.msRequestAnimationFrame ||
-					   function (/* function */ callback/*, DOMElement */){
-						   // Fallback method, 120 fps.
-						   return window.setTimeout(callback, 1000/120);
-					   };
+                       window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
+                       window.msRequestAnimationFrame ||
+                       function (/* function */ callback/*, DOMElement */){
+	                       // Fallback method, 120 fps.
+	                       return window.setTimeout(callback, 1000/120);
+                       };
 var cancelRequestAnimFrame = window['cancelAnimationFrame'] || window.webkitCancelRequestAnimationFrame ||
-							 window.mozCancelRequestAnimationFrame || window.oCancelRequestAnimationFrame ||
-							 window.msCancelRequestAnimationFrame || clearTimeout;
+                             window.mozCancelRequestAnimationFrame || window.oCancelRequestAnimationFrame ||
+                             window.msCancelRequestAnimationFrame || clearTimeout;
 
 function initRender(player){
 	/**
@@ -36,14 +36,16 @@ function initRender(player){
 
 	function beginRender(){
 		if(!player.osbData){
+			loadingMessage.stop();
 			loadingMessage.text('Playing...').opacity(true);
 			stage.draw();
 			return;
 		}
+		loadingMessage.hide();
+		
 		if(anime_timing){
 			return;
 		}
-		loadingMessage.hide();
 		if(!player._loaded){
 			player.reload();
 		}
@@ -58,7 +60,7 @@ function initRender(player){
 
 	function stopRender(){
 		if(!player.osbData){
-			loadingMessage.opacity(false);
+			loadingMessage.text('Paused...').opacity(false);
 			stage.draw();
 			return;
 		}
